@@ -21,8 +21,6 @@ const URI_MONGO = 'mongodb://localhost:27017/mestodb';
 mongoose.connect(URI_MONGO);
 // mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
 
-const { NODE_ENV } = process.env;
-
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
@@ -31,11 +29,7 @@ app.get('/crash-test', () => {
 app.use(limiter);
 app.use(requestLogger);
 app.use(policy);
-if (NODE_ENV === 'production') {
-  app.use('/api', routers);
-} else {
-  app.use(routers);
-}
+app.use(routers);
 app.use(errorLogger);
 app.use(errors());
 app.use(handleError);
