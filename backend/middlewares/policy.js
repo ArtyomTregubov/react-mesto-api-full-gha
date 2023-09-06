@@ -1,6 +1,6 @@
 const allowedCors = [
-  'http://mesto.tregubovart.nomoredomainsicu.ru/',
-  'https://mesto.tregubovart.nomoredomainsicu.ru/',
+  'http://mesto.tregubovart.nomoredomainsicu.ru',
+  'https://mesto.tregubovart.nomoredomainsicu.ru',
   'https://localhost:3000',
   'http://localhost:3000',
 ];

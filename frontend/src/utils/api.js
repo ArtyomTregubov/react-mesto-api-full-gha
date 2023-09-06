@@ -72,16 +72,9 @@ class Api {
   }
 }
 
-const HEADERS = {
-  headers: {
-    authorization: localStorage.getItem("token"),
-    "Content-Type": "application/json",
-  },
-};
-
 const cardsURL = `${BASE_URL}/cards`;
 export const userURL = `${BASE_URL}/users/me`;
 export const changeAvatarUrl = `${userURL}/avatar`;
 
-const API = new Api(HEADERS, cardsURL, userURL, changeAvatarUrl);
+const API = new Api(cardsURL, userURL, changeAvatarUrl);
 export default API;
