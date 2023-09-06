@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.31.239
 
-Frontend https://...
+Frontend https://mesto.tregubovart.nomoredomainsicu.ru
 
-Backend https://...
+Backend https://mesto.tregubovart.nomoredomainsicu.ru

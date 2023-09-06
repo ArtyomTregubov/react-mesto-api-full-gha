@@ -1,0 +1,31 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const helmet = require('helmet');
+const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
+
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limiter = require('./utils/limiter');
+const routers = require('./routes');
+const handleError = require('./errors/handleError');
+const policy = require('./middlewares/policy');
+
+const app = express();
+app.use(helmet());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+app.use(limiter);
+app.use(requestLogger);
+app.use(policy);
+app.use(routers);
+app.use(errorLogger);
+app.use(errors());
+app.use(handleError);
+app.listen(3000);
