@@ -6,7 +6,7 @@ const allowedCors = [
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
-const corsPolicy = (req, res, next) => {
+const policy = (req, res, next) => {
   const { origin } = req.headers;
   const requestHeaders = req.headers['access-control-request-headers'];
 
@@ -23,4 +23,4 @@ const corsPolicy = (req, res, next) => {
   return next();
 };
 
-module.exports = { corsPolicy };
+module.exports = policy;
