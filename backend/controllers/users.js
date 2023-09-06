@@ -4,7 +4,7 @@ const User = require('../models/user');
 const NotFoundError404 = require('../errors/notFoundError404');
 const ConflictError409 = require('../errors/conflictError409');
 const UnauthorizedError401 = require('../errors/unauthorizedError401');
-
+const { NODE_ENV, JWT_SECRET } = process.env;
 const createUser = async (req, res, next) => {
   const {
     name, about, avatar, password, email,
@@ -49,7 +49,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'some-secret-key',
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
         { expiresIn: '7d' },
       );
       res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 604800 }).send({ token });

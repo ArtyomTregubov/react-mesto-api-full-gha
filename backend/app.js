@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -19,6 +20,7 @@ const URI_MONGO = 'mongodb://localhost:27017/mestodb';
 
 mongoose.connect(URI_MONGO);
 // mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
+
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
@@ -27,7 +29,7 @@ app.get('/crash-test', () => {
 app.use(limiter);
 app.use(requestLogger);
 app.use(policy);
-app.use(routers);
+app.use('/api', routers);
 app.use(errorLogger);
 app.use(errors());
 app.use(handleError);
