@@ -76,7 +76,7 @@ const HEADERS = {
     "Content-Type": "application/json",
   },
 };
-const URL_API = "http://api.mesto.tregubovart.nomoredomainsicu.ru";
+const URL_API = "http://art.mesto.tregubovart.nomoredomainsicu.ru";
 const cardsURL = `${URL_API}/cards`;
 export const userURL = `${URL_API}/users/me`;
 export const changeAvatarUrl = `${userURL}/avatar`;
