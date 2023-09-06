@@ -1,13 +1,18 @@
 class Api {
-  constructor(headers, cardsURL, userURL, changeAvatarUrl) {
-    this.headers = headers;
+  constructor(cardsURL, userURL, changeAvatarUrl) {
     this.cardsURL = cardsURL;
     this.userURL = userURL;
     this.changeAvatarUrl = changeAvatarUrl;
   }
 
   async _send(url, payload) {
-    const res = await fetch(url, { ...payload, ...this.headers });
+    const HEADERS = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await fetch(url, { ...payload, ...HEADERS });
     if (res.ok) return await res.json();
     throw new Error(`Ошибка ${payload.method} url=${url} status=${res.status}`);
   }
@@ -65,16 +70,15 @@ class Api {
   }
 }
 
-const TOKEN = "85f45188-40df-476e-9439-a079efcb1c8d";
 const HEADERS = {
   headers: {
-    authorization: TOKEN,
+    authorization: localStorage.getItem("token"),
     "Content-Type": "application/json",
   },
 };
-const cohortId = "cohort-66";
-const cardsURL = `https://mesto.nomoreparties.co/v1/${cohortId}/cards`;
-export const userURL = `https://nomoreparties.co/v1/${cohortId}/users/me`;
+const URL_API = "http://api.mesto.tregubovart.nomoredomainsicu.ru";
+const cardsURL = `${URL_API}/cards`;
+export const userURL = `${URL_API}/users/me`;
 export const changeAvatarUrl = `${userURL}/avatar`;
 
 const API = new Api(HEADERS, cardsURL, userURL, changeAvatarUrl);

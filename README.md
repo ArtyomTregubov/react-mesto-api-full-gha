@@ -13,4 +13,4 @@ IP-адрес 51.250.31.239
 
 Frontend https://mesto.tregubovart.nomoredomainsicu.ru
 
-Backend https://mesto.tregubovart.nomoredomainsicu.ru/api
+Backend https://art.mesto.tregubovart.nomoredomainsicu.ru

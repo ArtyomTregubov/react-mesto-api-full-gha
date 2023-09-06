@@ -2,7 +2,7 @@ const allowedCors = [
   'http://mesto.tregubovart.nomoredomainsicu.ru/',
   'https://mesto.tregubovart.nomoredomainsicu.ru/',
   'https://localhost:3000',
-  'http://localhost:3000'
+  'http://localhost:3000',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
