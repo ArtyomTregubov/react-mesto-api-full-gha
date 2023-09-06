@@ -15,7 +15,10 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
+const URI_MONGO = 'mongodb://localhost:27017/mestodb';
+
+mongoose.connect(URI_MONGO);
+// mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
