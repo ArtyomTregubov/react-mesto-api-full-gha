@@ -1,10 +1,8 @@
-class Auth {
-  constructor() {
-    this.BASE_URL = "https://auth.nomoreparties.co";
-  }
+import { BASE_URL } from "./const";
 
+class Auth {
   async _send(endpoint, headers, payload) {
-    const url = `${this.BASE_URL}${endpoint}`;
+    const url = `${BASE_URL}${endpoint}`;
     const res = await fetch(url, { ...payload, ...headers });
     if (res.ok) return await res.json();
     throw new Error(`Ошибка ${payload.method} url=${url} status=${res.status}`);

@@ -1,3 +1,5 @@
+import { BASE_URL } from "./const";
+
 class Api {
   constructor(cardsURL, userURL, changeAvatarUrl) {
     this.cardsURL = cardsURL;
@@ -76,9 +78,9 @@ const HEADERS = {
     "Content-Type": "application/json",
   },
 };
-const URL_API = "http://art.mesto.tregubovart.nomoredomainsicu.ru";
-const cardsURL = `${URL_API}/cards`;
-export const userURL = `${URL_API}/users/me`;
+
+const cardsURL = `${BASE_URL}/cards`;
+export const userURL = `${BASE_URL}/users/me`;
 export const changeAvatarUrl = `${userURL}/avatar`;
 
 const API = new Api(HEADERS, cardsURL, userURL, changeAvatarUrl);
