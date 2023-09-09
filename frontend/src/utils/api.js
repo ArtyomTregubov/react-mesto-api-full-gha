@@ -1,4 +1,4 @@
-import { BASE_URL } from "./const";
+import { URL } from "./const";
 
 class Api {
   constructor(cardsURL, userURL, changeAvatarUrl) {
@@ -72,8 +72,8 @@ class Api {
   }
 }
 
-const cardsURL = `${BASE_URL}/cards`;
-export const userURL = `${BASE_URL}/users/me`;
+const cardsURL = `${URL}/cards`;
+export const userURL = `${URL}/users/me`;
 export const changeAvatarUrl = `${userURL}/avatar`;
 
 const API = new Api(cardsURL, userURL, changeAvatarUrl);

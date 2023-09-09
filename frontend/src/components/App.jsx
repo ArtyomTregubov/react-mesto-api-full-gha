@@ -8,6 +8,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import ProtectedRouteElement from "./ProtectedRoute";
+import DeletePopup from "./DeletePopup";
 
 import API from "../utils/api";
 import AUTH from "../utils/auth";
@@ -28,15 +29,20 @@ function App() {
   const [isAddPlacePopupOpen, addPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, editAvatarPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
+  const [isDeleteCardPopupOpen, deleteCardPopupOpen] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState({});
 
   const navigate = useNavigate();
 
-  async function getUserInfo() {
-    const userInfo = await API.getUserInfo();
-    setCurrentUser(userInfo);
-  }
+  React.useEffect(() => {
+    const handleEsc = (event) => {
+       if (event.key === 'Escape') {
+        handleCloseAllPopups();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+  }, []);
 
   async function getCards() {
     const initialCards = await API.getInitialCards();
@@ -48,9 +54,9 @@ function App() {
       try {
         const userInfo = await AUTH.checkToken();
         if (userInfo) {
-          localStorage.setItem("email", userInfo.data.email);
+          localStorage.setItem("email", userInfo.email);
           setLoggedIn(true);
-          await getUserInfo();
+          setCurrentUser(userInfo);
           await getCards();
         }
       } catch (err) {
@@ -67,6 +73,10 @@ function App() {
     setErrorStatus(status);
   }
 
+  function handleCardDeletePopup() {
+    deleteCardPopupOpen(true);
+  }
+
   function handleEditProfileClick() {
     editProfilePopupOpen(true);
   }
@@ -81,6 +91,7 @@ function App() {
     addPlacePopupOpen(false);
     editAvatarPopupOpen(false);
     setImagePopupOpen(false);
+    deleteCardPopupOpen(false);
   }
 
   function closeInfoTooltip() {
@@ -92,11 +103,11 @@ function App() {
 
   function handleCardClick(card) {
     setImagePopupOpen(true);
-    setSelectedCard(card);
+    // setSelectedCard(card);
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((like_user_id) => like_user_id === currentUser._id);
 
     API.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
@@ -111,13 +122,14 @@ function App() {
     API.deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+        handleCloseAllPopups();
       })
       .catch((err) => console.log(err));
   }
 
   function handleUpdateUser({ name, about }) {
     const newUserData = { ...currentUser, name, about };
-    API.updateUserInfo(newUserData)
+    API.updateUserInfo({ name, about })
       .then(() => {
         setCurrentUser(newUserData);
         handleCloseAllPopups();
@@ -209,9 +221,10 @@ function App() {
                         onAddPlace={handleAddPlaceClick}
                         onEditAvatar={handleEditAvatarClick}
                         onCardClick={handleCardClick}
+                        setSelectedCard={setSelectedCard}
                         cards={cards}
                         onCardLike={handleCardLike}
-                        onCardDelete={handleCardDelete}
+                        onCardDelete={handleCardDeletePopup}
                       />
                       <Footer />
                     </>
@@ -290,6 +303,12 @@ function App() {
           card={selectedCard}
           isOpen={isImagePopupOpen}
           onClose={handleCloseAllPopups}
+        />
+        <DeletePopup
+            card={selectedCard}
+            onCardDelete={handleCardDelete}
+            onClose={handleCloseAllPopups}
+            isOpen={isDeleteCardPopupOpen}
         />
       </div>
     </CurrentUserContext.Provider>

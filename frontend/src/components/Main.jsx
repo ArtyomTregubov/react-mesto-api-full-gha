@@ -11,6 +11,7 @@ export default function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
+  setSelectedCard,
 }) {
   const { name, about, avatar } = React.useContext(CurrentUserContext);
 
@@ -45,6 +46,7 @@ export default function Main({
             <Card
               card={card}
               onCardClick={onCardClick}
+              setSelectedCard={setSelectedCard}
               key={card._id}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}

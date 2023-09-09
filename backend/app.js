@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
@@ -18,8 +19,8 @@ app.use(bodyParser.json());
 
 const URI_MONGO = 'mongodb://localhost:27017/mestodb';
 
-mongoose.connect(URI_MONGO);
-// mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
+// mongoose.connect(URI_MONGO);
+mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
 
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -28,7 +29,8 @@ app.get('/crash-test', () => {
 });
 app.use(limiter);
 app.use(requestLogger);
-app.use(policy);
+// app.use(policy);
+app.use(cors());
 app.use(routers);
 app.use(errorLogger);
 app.use(errors());

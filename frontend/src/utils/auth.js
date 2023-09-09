@@ -1,8 +1,8 @@
-import { BASE_URL } from "./const";
+import { URL } from "./const";
 
 class Auth {
   async _send(endpoint, headers, payload) {
-    const url = `${BASE_URL}${endpoint}`;
+    const url = `${URL}${endpoint}`;
     const res = await fetch(url, { ...payload, ...headers });
     if (res.ok) return await res.json();
     throw new Error(`Ошибка ${payload.method} url=${url} status=${res.status}`);

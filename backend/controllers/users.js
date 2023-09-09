@@ -58,26 +58,24 @@ const login = (req, res, next) => {
     .catch(() => next(new UnauthorizedError401('Необходима авторизация')));
 };
 
-const updateUser = (id, params, res, next) => User.findByIdAndUpdate(id, params, { new: true, runValidators: true })
-  .then((user) => res.send(user))
-  .catch(next);
-
 const updateProfileInfo = async (req, res, next) => {
   const { name, about } = req.body;
-  updateUser(req.user._id, { name, about }, res, next).then((user) => res.send(user))
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+    .then((user) => res.send(user))
     .catch(next);
 };
 
 const updateAvatar = async (req, res, next) => {
   const { avatar } = req.body;
-  updateUser(req.user._id, { avatar }, res, next).then((user) => res.send(user))
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+    .then((user) => res.send(user))
     .catch(next);
 };
 
 const getUsers = async (req, res, next) => {
   try {
     const users = await User.find({ });
-    res.send(users);
+    return res.send(users);
   } catch (err) {
     next(err);
   }

@@ -1,3 +1,3 @@
-const BASE_URL = "https://art.mesto.tregubovart.nomoredomainsicu.ru";
+const URL = "https://art.mesto.tregubovart.nomoredomainsicu.ru";
 
-export { BASE_URL };
+export { URL };
