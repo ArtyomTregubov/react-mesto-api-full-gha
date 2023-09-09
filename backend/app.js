@@ -10,7 +10,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./utils/limiter');
 const routers = require('./routes');
 const handleError = require('./errors/handleError');
-const policy = require('./middlewares/policy');
+// const policy = require('./middlewares/policy');
 
 const app = express();
 app.use(helmet());
@@ -19,8 +19,8 @@ app.use(bodyParser.json());
 
 const URI_MONGO = 'mongodb://localhost:27017/mestodb';
 
-// mongoose.connect(URI_MONGO);
-mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
+mongoose.connect(URI_MONGO);
+// mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mestodb?authSource=admin');
 
 app.get('/crash-test', () => {
   setTimeout(() => {
